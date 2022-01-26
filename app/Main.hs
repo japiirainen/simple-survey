@@ -1,6 +1,7 @@
-module Main where
+module Main
+    where
 
-import Lib
+import qualified SimpleSurvey
 
 main :: IO ()
-main = someFunc
+main = SimpleSurvey.main
