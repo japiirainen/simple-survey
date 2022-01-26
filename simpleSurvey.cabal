@@ -23,6 +23,12 @@ source-repository head
 library
   exposed-modules:
       SimpleSurvey
+      SimpleSurvey.Config
+      SimpleSurvey.Database
+      SimpleSurvey.Init
+      SimpleSurvey.Logger
+      SimpleSurvey.App
+      Util.Database.Persist.Postgresql.Json
   other-modules:
       Paths_simpleSurvey
   hs-source-dirs:

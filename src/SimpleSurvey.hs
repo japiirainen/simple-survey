@@ -1,4 +1,6 @@
 module SimpleSurvey where
 
+import qualified SimpleSurvey.Init as Init
+
 main :: IO ()
-main = print "Hello, world!"
+main = Init.runApp

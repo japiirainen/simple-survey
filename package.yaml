@@ -10,6 +10,38 @@ extra-source-files:
 
 ghc-options: -Wall
 
+library:
+  source-dirs: src
+  exposed-modules:
+    - SimpleSurvey
+    - SimpleSurvey.Config
+    - SimpleSurvey.Database
+    - SimpleSurvey.Init
+    - SimpleSurvey.Logger
+    - SimpleSurvey.App
+    - Util.Database.Persist.Postgresql.Json
+
+
+executable:
+  main: Main.hs
+  source-dirs: app
+  dependencies:
+    - simpleSurvey
+
+tests:
+  tests:
+    main: Main.hs
+    source-dirs: tests
+
+    dependencies:
+      - base
+      - hspec
+      - simpleSurvey
+      - servant-client
+      - warp >= 3.2.4
+      - http-client
+      - http-types
+
 dependencies:
   - base
   - servant
@@ -53,29 +85,3 @@ dependencies:
   - servant-auth-server
   - time
   - quickcheck-text
-
-library:
-  source-dirs: src
-  exposed-modules:
-    - SimpleSurvey
-
-
-executable:
-  main: Main.hs
-  source-dirs: app
-  dependencies:
-    - simpleSurvey
-
-tests:
-  tests:
-    main: Main.hs
-    source-dirs: tests
-
-    dependencies:
-      - base
-      - hspec
-      - simpleSurvey
-      - servant-client
-      - warp >= 3.2.4
-      - http-client
-      - http-types

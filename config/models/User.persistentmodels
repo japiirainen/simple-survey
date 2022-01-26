@@ -1,0 +1,5 @@
+User m
+    ident Text
+    password (PasswordHash Bcrypt)
+    UniqueUser ident
+    deriving (Eq)
