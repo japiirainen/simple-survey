@@ -11,7 +11,48 @@ extra-source-files:
 ghc-options: -Wall
 
 dependencies:
-    - base
+  - base
+  - servant
+  - servant-server
+  - transformers
+  - servant-multipart
+  - http-client
+  - utf8-string
+  - password
+  - password-instances
+  - password-types
+  - persistent
+  - persistent-template
+  - persistent-postgresql
+  - monad-logger
+  - monad-metrics
+  - esqueleto
+  - aeson
+  - wai
+  - wai-extra
+  - text
+  - warp
+  - http-api-data
+  - bytestring
+  - containers
+  - QuickCheck
+  - quickcheck-arbitrary-adt
+  - wai-cors
+  - mtl
+  - katip
+  - say
+  - fast-logger
+  - safe-exceptions
+  - safe
+  - ekg
+  - wai-middleware-metrics
+  - resource-pool
+  - microlens
+  - hspec
+  - servant-auth
+  - servant-auth-server
+  - time
+  - quickcheck-text
 
 library:
   source-dirs: src
@@ -26,11 +67,15 @@ executable:
     - simpleSurvey
 
 tests:
-  tasty:
+  tests:
     main: Main.hs
-    source-dirs: tasty
+    source-dirs: tests
 
     dependencies:
       - base
-      - tasty
-      - tasty-hunit
+      - hspec
+      - simpleSurvey
+      - servant-client
+      - warp >= 3.2.4
+      - http-client
+      - http-types
