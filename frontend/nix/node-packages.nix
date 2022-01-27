@@ -969,8 +969,8 @@ let
     };
   };
   args = {
-    name = "xchg";
-    packageName = "xchg";
+    name = "simpleSurvey";
+    packageName = "simpleSurvey";
     version = "0.0.0";
     src = ./..;
     dependencies = [
