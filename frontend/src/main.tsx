@@ -5,7 +5,7 @@ import {BrowserRouter} from 'react-router-dom'
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <div>Hello world</div>
+      <div>hello world</div>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('app')

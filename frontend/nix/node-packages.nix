@@ -969,8 +969,8 @@ let
     };
   };
   args = {
-    name = "simpleSurvey";
-    packageName = "simpleSurvey";
+    name = "simple-survey";
+    packageName = "simple-survey";
     version = "0.0.0";
     src = ./..;
     dependencies = [

@@ -11,11 +11,10 @@ let
       -o ./nix/node-packages.nix \
       -e ./nix/node-env.nix
   '';
-in
-{
+in {
   inherit (generated) nodeDependencies;
   static = stdenv.mkDerivation {
-    name = "simpleSurvey-frontend";
+    name = "xchg-frontend";
     src = ./.;
     buildInputs = [ nodejs ];
     buildPhase = ''
