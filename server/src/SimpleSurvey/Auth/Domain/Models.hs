@@ -53,7 +53,7 @@ instance FromJSON Login
 
 type Authorized = Auth '[Cookie, JWT] AuthUser
 
-data ErrorInsertUser = InserUserConflict
+data ErrorInsertUser = InsertUserConflict
   deriving (Eq, Show)
 
 type CreateUserBySignup m =

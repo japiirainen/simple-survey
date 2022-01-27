@@ -11,11 +11,7 @@
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE UndecidableInstances #-}
 
-module SimpleSurvey.Database
-  ( doMigrations,
-    runDb,
-  )
-where
+module SimpleSurvey.Database where
 
 import Control.Monad.Reader
   ( MonadIO,

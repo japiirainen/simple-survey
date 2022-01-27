@@ -10,26 +10,11 @@ module SimpleSurvey.App
 where
 
 import Control.Monad.Reader (MonadIO, runReaderT)
-import Data.Text (Text)
 import Database.Persist.Postgresql (ConnectionPool)
 import Network.Wai
 import Servant
-  ( Context (EmptyContext, (:.)),
-    Get,
-    Handler (Handler),
-    HasServer (ServerT, hoistServerWithContext),
-    IsSecure (NotSecure),
-    PlainText,
-    Proxy (..),
-    Server,
-    serveWithContext,
-  )
 import Servant.Auth.Server
-  ( CookieSettings (cookieIsSecure, cookieSameSite, cookieXsrfSetting),
-    JWTSettings,
-    SameSite (SameSiteStrict),
-    defaultCookieSettings,
-  )
+import SimpleSurvey.Auth.API
 import SimpleSurvey.Config
   ( AppT (runAppT),
     Config (configJWTSettings, configPool),
@@ -39,7 +24,9 @@ import SimpleSurvey.Config
 
 -- This is the API definition
 
-type API = Get '[PlainText] Text
+-- type Authorized = Auth '[Cookie] AuthUser
+
+type API = AuthAPI
 
 context :: Proxy '[CookieSettings, JWTSettings]
 context = Proxy
@@ -57,7 +44,7 @@ appToServer cfg = hoistServerWithContext api context (convertApp cfg) $ server (
 
 -- Creates server definition for API, which is the one that adds the logic to the typed specification
 server :: (MonadIO m) => ConnectionPool -> JWTSettings -> ServerT API (AppT m)
-server _pool _jwtSettings = return "Hello world"
+server pool jwtSettings = authServer defaultCookieSettings jwtSettings pool
 
 cookieSettings :: CookieSettings
 cookieSettings = defaultCookieSettings {cookieIsSecure = NotSecure, cookieSameSite = SameSiteStrict, cookieXsrfSetting = Nothing}
