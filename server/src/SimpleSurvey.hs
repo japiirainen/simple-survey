@@ -1,4 +1,7 @@
-module SimpleSurvey where
+module SimpleSurvey
+  ( main,
+  )
+where
 
 import qualified SimpleSurvey.Init as Init
 

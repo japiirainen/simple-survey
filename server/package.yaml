@@ -1,12 +1,5 @@
-name: simpleSurvey
+name: simpleSurvey-server
 version: 0.0.1
-synopsis: A simple survey tool
-description: See README at <https://github.com/japiirainen/simple-survey#readme>
-maintainer: Joona Piirainen <joona.piirainen@gmail.com>
-github: japiirainen/simple-survey
-category: Development
-extra-source-files:
-  - CHANGELOG.md
 
 ghc-options: -Wall
 
@@ -19,6 +12,14 @@ library:
     - SimpleSurvey.Init
     - SimpleSurvey.Logger
     - SimpleSurvey.App
+    - SimpleSurvey.Base.Error
+    - SimpleSurvey.Base.Models
+    - SimpleSurvey.Auth.Domain.Models
+    - SimpleSurvey.Auth.Domain.Commands.SignUpUser
+    - SimpleSurvey.Auth.Domain.Queries.LoginUser
+    - SimpleSurvey.Auth.API
+    - SimpleSurvey.Auth.Repository.Persist.Postgres
+    - SimpleSurvey.Auth.Repository.UserRepository
     - Util.Database.Persist.Postgresql.Json
 
 
@@ -26,7 +27,7 @@ executable:
   main: Main.hs
   source-dirs: app
   dependencies:
-    - simpleSurvey
+    - simpleSurvey-server
 
 tests:
   tests:
@@ -36,7 +37,7 @@ tests:
     dependencies:
       - base
       - hspec
-      - simpleSurvey
+      - simpleSurvey-server
       - servant-client
       - warp >= 3.2.4
       - http-client

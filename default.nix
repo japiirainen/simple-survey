@@ -1,37 +1,26 @@
-{ compiler ? "ghc8107" }:
+{ concurrently, dockerTools, writeShellScriptBin, simpleSurvey }:
 
-let
-  nixpkgs = builtins.fetchTarball {
-    url = "https://github.com/NixOS/nixpkgs/archive/21a3136d25e1652cb32197445e9799e6a5154588.tar.gz";
-    sha256 = "145d474g6dngvaiwq2whqdvaq14ba9pc5pvvcz4x8l2bkwbyn3hg";
-  };
-
-  overlay = pkgsNew: pkgsOld: {
-    haskell = pkgsOld.haskell // {
-      packages = pkgsOld.haskell.packages // {
-        "${compiler}" = pkgsOld.haskell.packages."${compiler}".override (old: {
-          overrides =
-            let
-              oldOverrides = old.overrides or (_: _: { });
-
-              manualOverrides = haskellPackagesNew: haskellPackagesOld: {
-                simpleSurvey = pkgsNew.haskell.lib.dontCheck haskellPackagesOld.simpleSurvey;
-              };
-
-              sourceOverrides = pkgsNew.haskell.lib.packageSourceOverrides {
-                simpleSurvey = ./.;
-              };
-
-            in
-            pkgsNew.lib.fold pkgsNew.lib.composeExtensions oldOverrides ([ sourceOverrides ]);
-        });
-      };
+{
+  # Docker image
+  image = dockerTools.buildLayeredImage {
+    name = "simpleSurvey";
+    tag = "latest";
+    contents = with simpleSurvey; [ server.server frontend.static ];
+    config = {
+      Cmd = [ "simpleSurvey-server" ];
+      ExposedPorts = { "8081/tcp" = { }; };
     };
   };
 
-  config.allowBroken = true;
-
-  pkgs = import nixpkgs { inherit config; overlays = [ overlay ]; };
-
-in
-{ inherit (pkgs.haskell.packages."${compiler}") simpleSurvey; }
+  # Launch development server
+  dev = writeShellScriptBin "dev" ''
+    rm -rf ./node_modules
+    ln -s ${simpleSurvey.frontend.nodeDependencies}/lib/node_modules ./node_modules
+    export PATH="${simpleSurvey.frontend.nodeDependencies}/bin:$PATH"
+    nix develop --command ${concurrently}/bin/concurrently \
+      -n FE,BE \
+      -c green,red \
+      "cd frontend && npm start" \
+      "cd server && hpack && cabal build && ghcid -r Main"
+  '';
+}
