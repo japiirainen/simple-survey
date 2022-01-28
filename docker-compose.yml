@@ -11,8 +11,8 @@ services:
     image: postgres:latest
     restart: always
     environment:
-      POSTGRES_PASSWORD: pass
+      POSTGRES_PASSWORD: admin
       POSTGRES_USER: admin
-      POSTGRES_DB: testdb
+      POSTGRES_DB: db
     ports:
     - 5432:5432

@@ -1,7 +1,6 @@
-module Main
-    where
+module Main where
 
-import qualified SimpleSurvey
+import qualified SS
 
 main :: IO ()
-main = SimpleSurvey.main
+main = SS.main

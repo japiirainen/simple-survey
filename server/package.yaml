@@ -6,22 +6,7 @@ ghc-options: -Wall
 library:
   source-dirs: src
   exposed-modules:
-    - SimpleSurvey
-    - SimpleSurvey.Config
-    - SimpleSurvey.Database
-    - SimpleSurvey.Init
-    - SimpleSurvey.Logger
-    - SimpleSurvey.App
-    - SimpleSurvey.Base.Error
-    - SimpleSurvey.Base.Models
-    - SimpleSurvey.Auth.Domain.Models
-    - SimpleSurvey.Auth.Domain.Commands.SignUpUser
-    - SimpleSurvey.Auth.Domain.Queries.LoginUser
-    - SimpleSurvey.Auth.API
-    - SimpleSurvey.Auth.Repository.Persist.Postgres
-    - SimpleSurvey.Auth.Repository.UserRepository
-    - Util.Database.Persist.Postgresql.Json
-
+    - SS
 
 executable:
   main: Main.hs
@@ -45,6 +30,8 @@ tests:
 
 dependencies:
   - base
+  - postgresql-simple
+  - postgresql-simple-migration
   - servant
   - servant-server
   - transformers
@@ -54,12 +41,8 @@ dependencies:
   - password
   - password-instances
   - password-types
-  - persistent
-  - persistent-template
-  - persistent-postgresql
   - monad-logger
   - monad-metrics
-  - esqueleto
   - aeson
   - wai
   - wai-extra
@@ -68,6 +51,8 @@ dependencies:
   - http-api-data
   - bytestring
   - containers
+  - cereal
+  - cryptonite
   - QuickCheck
   - quickcheck-arbitrary-adt
   - wai-cors
@@ -77,8 +62,6 @@ dependencies:
   - fast-logger
   - safe-exceptions
   - safe
-  - ekg
-  - wai-middleware-metrics
   - resource-pool
   - microlens
   - hspec
@@ -86,3 +69,20 @@ dependencies:
   - servant-auth-server
   - time
   - quickcheck-text
+
+default-extensions:
+  - DataKinds
+  - DeriveGeneric
+  - GeneralizedNewtypeDeriving
+  - FlexibleContexts
+  - OverloadedStrings
+  - FlexibleInstances
+  - RankNTypes
+  - RecordWildCards
+  - ScopedTypeVariables
+  - ScopedTypeVariables
+  - StandaloneDeriving
+  - TemplateHaskell
+  - UndecidableInstances
+  - TypeFamilies
+  - TypeOperators
