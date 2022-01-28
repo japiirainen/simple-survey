@@ -56,6 +56,7 @@ dependencies:
   - QuickCheck
   - quickcheck-arbitrary-adt
   - wai-cors
+  - wai-logger
   - mtl
   - katip
   - say

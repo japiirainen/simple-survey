@@ -3,7 +3,8 @@ module SS.App
   )
 where
 
-import Network.Wai.Handler.Warp (run)
+import Network.Wai.Handler.Warp (defaultSettings, runSettings, setLogger, setPort)
+import Network.Wai.Logger (withStdoutLogger)
 import SS.Database (initializeDatabase)
 import SS.Resource (API, proxy, routes)
 import SS.Types (AppContext (..), convert)
@@ -38,7 +39,9 @@ startApp = do
             appContextCookieSettings = def {cookieIsSecure = NotSecure},
             appContextJWTSettings = defaultJWTSettings myKey
           }
-  run (appContextPort ctx) $ createApp ctx
+  withStdoutLogger $ \aplogger -> do
+    let settings = setPort (appContextPort ctx) $ setLogger aplogger defaultSettings
+    runSettings settings $ createApp ctx
 
 createApp :: AppContext -> Application
 createApp appContext@AppContext {..} =
